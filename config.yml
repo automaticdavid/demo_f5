@@ -15,10 +15,6 @@
 
   - name: CREATE POOL
     bigip_pool:
-      server: "{{private_ip}}"
-      user: "{{ansible_user}}"
-      password: "{{ansible_ssh_pass}}"
-      server_port: "8443"
       name: "http_pool"
       lb_method: "round-robin"
       monitors: "/Common/http"
@@ -27,10 +23,6 @@
 
   - name: ADD POOL MEMBERS
     bigip_pool_member:
-      server: "{{private_ip}}"
-      user: "{{ansible_user}}"
-      password: "{{ansible_ssh_pass}}"
-      server_port: "8443"
       state: "present"
       name: "{{hostvars[item].inventory_hostname}}"
       host: "{{hostvars[item].ansible_host}}"
@@ -41,10 +33,6 @@
 
   - name: ADD VIRTUAL SERVER
     bigip_virtual_server:
-      server: "{{private_ip}}"
-      user: "{{ansible_user}}"
-      password: "{{ansible_ssh_pass}}"
-      server_port: "8443"
       name: "vip"
       destination: "{{private_ip}}"
       port: "443"
@@ -66,11 +54,6 @@
 
   - name: ADD iRules
     bigip_irule:
-      server: "{{private_ip}}"
-      user: "{{ansible_user}}"
-      password: "{{ansible_ssh_pass}}"
-      server_port: "8443"
-      validate_certs: "no"
       module: "ltm"
       name: "{{item}}"
       content: "{{lookup('file','{{item}}')}}"
@@ -78,10 +61,5 @@
     
   - name: ATTACH iRules TO VIRTUAL SERVER
     bigip_virtual_server:
-      server: "{{private_ip}}"
-      user: "{{ansible_user}}"
-      password: "{{ansible_ssh_pass}}"
-      server_port: "8443"
-      validate_certs: "no"
       name: "vip"
       irules: "{{irules}}"
