@@ -1,6 +1,6 @@
 ---
 - name: BIG-IP SETUP
-  hosts: lb
+  hosts: all
   connection: local
   gather_facts: false
 
@@ -59,7 +59,7 @@
       validate_certs: "no"
 
 - name: BIG-IP SETUP
-  hosts: lb
+  hosts: all
   connection: local
   gather_facts: false
 
